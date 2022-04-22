@@ -1,0 +1,52 @@
+{% extends "auctions/layout.html" %}
+{% block body %}
+
+<seciton class="">
+  {% if listing.creator == request.user %}
+  <a href="{% url 'close' listing.id %}" type="button" class="btn btn-outline-danger" >Close</a>
+  {% endif%}
+  <a href="{% url 'add_watchlist' listing.id %}" type="button" class="btn btn-outline-primary btn-outlined" >Add to watchlist</a>
+</seciton>
+
+<div class="card mb-3 mt-2">
+  <img src="{{listing.first_picture}}" class="card-img-top"
+    style="border: 1px solid #000; max-width:100%; max-height:700px;">
+
+  <div class="card-body">
+    <h3 class="card-title">Listing: {{listing.title}}</h3>
+    <p class="card-text">
+    <h4> Price: ${{listing.startingbid}}</h4>
+    </p>
+    <form action=" {% url 'takebid' listing.id %}" method="POST">
+      {% csrf_token %}
+      {{bid_form.as_p}}
+      <input type="submit" class="btn btn-primary" value="Place bid">
+    </form>
+    <h2> Details </h2>
+    <ul>
+      <li>Listed by: {{listing.creator}}</li>
+      <li>category: {{listing.category}}
+      <li>
+      <li>Created {{listing.created_at}}</li>
+    </ul>
+  </div>
+</div>
+  <h2> Comments </h2>
+  {% for value in comment_data %}
+  <ul>
+    <li>
+     <strong> {{value.user}}- {{value.comment_date}}</strong> 
+      <p>{{ value.comment }}</p>
+    </li>
+  </ul>
+  </div>
+{% empty %}
+  <p>There are no comments yet.</p>
+{% endfor %}
+<form action=" {% url 'comment' listing.id %}" method="POST">
+  {% csrf_token %}
+  {{comment_form.as_p}}
+  <input type="submit" class="btn btn-primary" value="Add comment">
+</form>
+</div>
+{% endblock %}

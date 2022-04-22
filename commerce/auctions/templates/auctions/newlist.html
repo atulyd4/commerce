@@ -1,0 +1,17 @@
+
+{% extends "auctions/layout.html" %}
+{% load static %}
+
+{% block body %}
+    <div style="display: flex;
+    justify-content: center;">
+        <form action=" {% url 'listing' %}"
+              method="POST"
+              enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            {{ img_form.as_p }}
+            <input type="submit" class="btn btn-success">
+        </form>
+    </div>
+{% endblock %}

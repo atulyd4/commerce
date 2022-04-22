@@ -1,0 +1,27 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Active Listings</h2>
+    {%for active_list in listings %}
+    <a href="{% url 'details' active_list.id %}" class="text-decoration-none" style="color: inherit;">
+    <div class="card mb-3" style="max-width:100%;">
+        <div class="row no-gutters">
+          <div class="col-md-4">
+             <img src='{{ active_list.first_picture }}' style="border: 1px solid #000; max-width:600px; max-height:500px;" class="card-img" alt="...">
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h3 class="card-title">{{active_list.title}}</h3>
+              <p class="card-text">
+                 <h5> Price: ${{active_list.startingbid}}</h5>
+                 Created {{active_list.created_at}}
+                </p>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </a>
+    {% endfor %}
+
+{% endblock %}
